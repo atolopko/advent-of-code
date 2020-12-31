@@ -30,12 +30,27 @@ object AdventOfCode {
 
   def dayTwo(input: List[String]): Unit = {
     val entry = raw"^(\d+)-(\d+) (.): (.+)".r
-    val validPasswds =
-      input.filter(_ match {
-        case entry(min, max, letter, passwd) =>
-          (min.toInt to max.toInt).contains(passwd.count(_ == letter(0)))
-      })
-    println(s"valid passwords=${validPasswds.length}")
+
+    //    // Part One
+//    {
+//      val validPasswds =
+//        input.filter(_ match {
+//          case entry(min, max, letter, passwd) =>
+//            (min.toInt to max.toInt).contains(passwd.count(_ == letter(0)))
+//        })
+//      println(s"valid passwords=${validPasswds.length}")
+//    }
+
+    // Part Two
+    {
+      val validPasswds =
+        input.filter(_ match {
+          case entry(pos1, pos2, letter, passwd) =>
+            println(passwd.length)
+            passwd(pos1.toInt - 1) == letter(0) ^ passwd(pos2.toInt - 1) == letter(0)
+        })
+      println(s"valid passwords=${validPasswds.length}")
+    }
   }
 
   def main(args: Array[String]): Unit = {
