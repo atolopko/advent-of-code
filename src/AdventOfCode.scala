@@ -28,11 +28,22 @@ object AdventOfCode {
       }
   }
 
+  def dayTwo(input: List[String]): Unit = {
+    val entry = raw"^(\d+)-(\d+) (.): (.+)".r
+    val validPasswds =
+      input.filter(_ match {
+        case entry(min, max, letter, passwd) =>
+          (min.toInt to max.toInt).contains(passwd.count(_ == letter(0)))
+      })
+    println(s"valid passwords=${validPasswds.length}")
+  }
+
   def main(args: Array[String]): Unit = {
     val day = args(0).toInt
     val input = Source.fromFile(s"input/$day.txt").getLines.toList
     day match {
       case 1 => dayOne(input)
+      case 2 => dayTwo(input)
     }
   }
 }
