@@ -32,14 +32,14 @@ object AdventOfCode {
     val entry = raw"^(\d+)-(\d+) (.): (.+)".r
 
     //    // Part One
-//    {
-//      val validPasswds =
-//        input.filter(_ match {
-//          case entry(min, max, letter, passwd) =>
-//            (min.toInt to max.toInt).contains(passwd.count(_ == letter(0)))
-//        })
-//      println(s"valid passwords=${validPasswds.length}")
-//    }
+    {
+      val validPasswds =
+        input.filter(_ match {
+          case entry(min, max, letter, passwd) =>
+            (min.toInt to max.toInt).contains(passwd.count(_ == letter(0)))
+        })
+      println(s"valid passwords=${validPasswds.length}")
+    }
 
     // Part Two
     {
@@ -53,12 +53,29 @@ object AdventOfCode {
     }
   }
 
+  def dayThree(input: List[String]): Unit = {
+    val forest = input.toArray
+    val height = forest.length
+    val width = forest(0).length
+
+    // Part One
+    val dy = 1
+    val dx = 3
+    val trees =
+      for (y <- 0 until height by dy;
+           x = (y * dx) % width;
+           if forest(y)(x) == '#')
+        yield (x,y)
+    println(s"trees hit=${trees.length}")
+  }
+
   def main(args: Array[String]): Unit = {
     val day = args(0).toInt
     val input = Source.fromFile(s"input/$day.txt").getLines.toList
     day match {
       case 1 => dayOne(input)
       case 2 => dayTwo(input)
+      case 3 => dayThree(input)
     }
   }
 }
