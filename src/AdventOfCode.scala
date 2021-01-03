@@ -58,15 +58,27 @@ object AdventOfCode {
     val height = forest.length
     val width = forest(0).length
 
+    def treesHit(dx: Int, dy: Int) = {
+      val trees =
+        for (y <- 0 until height by dy;
+             x = ((y / dy) * dx) % width;
+             if forest(y)(x) == '#')
+          yield (x, y)
+      trees
+    }
+
     // Part One
-    val dy = 1
-    val dx = 3
-    val trees =
-      for (y <- 0 until height by dy;
-           x = (y * dx) % width;
-           if forest(y)(x) == '#')
-        yield (x,y)
-    println(s"trees hit=${trees.length}")
+    {
+      val result = treesHit(3, 1).length
+      println(s"trees hit=${result}")
+    }
+
+    // Part Two
+    {
+      val result = Seq((1, 1), (3, 1), (5, 1), (7, 1), (1, 2)).map(v => treesHit(v._1, v._2).length)
+      //println(s"trees hit=${result}")
+      println(s"product of trees hit=${result.product}")
+    }
   }
 
   def main(args: Array[String]): Unit = {
